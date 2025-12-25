@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy New Year ❄️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  background: radial-gradient(circle at top left,#930dd1,#1a001f 80%);
+  overflow:hidden;
+  color:white;
+}
+canvas{position:fixed;inset:0;z-index:-1;}
+
+.page{
+  width:100vw;height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:10px;
+}
+.page.active{display:flex}
+
+.container{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(20px);
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 0 50px rgba(255,200,220,.5), inset 0 0 25px rgba(255,255,255,.2);
+  animation:pulse 3s infinite alternate;
+  max-width:90%;
+  color:#ffe9f5; /* text color improved */
+}
+@keyframes pulse{
+  from{box-shadow:0 0 30px #ffcfe0;}
+  to{box-shadow:0 0 70px #ffe5f0;}
+}
+
+h1{
+  font-size:2rem;
+  margin-bottom:15px;
+  color:#ffd1ea;
+  text-shadow:0 0 30px rgba(255,180,220,0.9);
+}
+.type{
+  font-size:1.3rem;
+  min-height:36px;
+  line-height:1.6;
+  color:#fff0f8;
+  text-shadow:0 0 20px rgba(255,170,220,0.8);
+}
+.type::after{content:'|';animation:blink 0.8s infinite;}
+@keyframes blink{0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
+
+.btn{
+  margin-top:25px;
+  padding:14px 36px;
+  border:none;border-radius:50px;
+  background:linear-gradient(45deg,#ff8fcf,#ffdeeb);
+  color:#290022;font-size:1rem;
+  cursor:pointer;
+  box-shadow:0 0 40px #ffb3d9;
+  transition:0.3s;
+}
+.btn:hover{transform:scale(1.05);}
+
+/* Paragraph text */
+.container p{
+  color:#fff1f9;
+  text-shadow:0 0 15px rgba(255,160,210,0.6);
+}
+
+/* SNOWMAN */
+.snowman{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;}
+.snow{border-radius:50%;position:relative;background: radial-gradient(circle at 30% 25%,#fff,#ffe7f0 40%,#ffcfe6 70%);}
+.head{width:72px;height:72px}
+.middle{width:105px;height:105px;margin-top:-12px}
+.body{width:140px;height:140px;margin-top:-20px}
+.eye{width:6px;height:6px;background:#111;border-radius:50%;position:absolute;top:28px;}
+.eye.left{left:24px}.eye.right{right:24px;}
+.nose{position:absolute;top:38px;left:50%;transform:translateX(6px);
+border-left:16px solid #ff5a1a;border-top:6px solid transparent;border-bottom:6px solid transparent;}
+.coal{width:8px;height:8px;background:#222;border-radius:50%;position:absolute;left:50%;transform:translateX(-50%);}
+.c1{top:30px}.c2{top:55px}.c3{top:80px;}
+.scarf{width:110px;height:18px;background:#ff6f9c;border-radius:12px;margin-top:-5px;}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+<canvas id="snow"></canvas>
+<canvas id="hearts"></canvas>
+
+<div class="snowman">
+  <div class="snow head">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="nose"></div>
+  </div>
+  <div class="scarf"></div>
+  <div class="snow middle">
+    <div class="coal c1"></div>
+    <div class="coal c2"></div>
+    <div class="coal c3"></div>
+  </div>
+  <div class="snow body"></div>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+  <div class="container">
+    <h1>Hey Beautiful ❄️</h1>
+    <div class="type" id="typeText"></div>
+    <button class="btn" onclick="nextPage(2)">Next ✨</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+  <div class="container">
+    <h1>DONT FORGET 💖</h1>
+    <div class="type" id="typeText2"></div>
+    <button class="btn" onclick="nextPage(3)">Next 🎉</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+  <div class="container">
+    <h1 id="line1"></h1>
+    <p id="line2"></p>
+    <p id="line3"></p>
+    <p id="line4"></p>
+    <p id="line5"></p>
+  </div>
+</div>
+
+<script>
+function typeWriter(el,text,speed=50){
+  el.innerHTML=""; let i=0;
+  (function type(){
+    if(i<text.length){
+      el.innerHTML+=text[i++];
+      setTimeout(type,speed);
+    }
+  })();
+}
+
+typeWriter(typeText,"For my CA girl ✨");
+
+function nextPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('p'+n).classList.add('active');
+
+  if(n===2) typeWriter(typeText2,"You make every moment brighter and sweeter 💖");
+
+  if(n===3){
+    const texts=[
+      "Happy New Year, Trisha🎉",
+      "May every day with you feel like a beautiful dream ✨",
+      "Your smile makes everything brighter, and your presence makes life warmer 💕",
+      "May this year reward your hard work and bring you closer to your CA dreams 📚🌸",
+      "Wishing you again a very Happy New Year, sweetheart 💖"
+    ];
+    [line1,line2,line3,line4,line5].forEach((el,i)=>{
+      setTimeout(()=>typeWriter(el,texts[i]),i*2200);
+    });
+  }
+}
+
+/* STARS */
+const starCanvas=stars,sctx=starCanvas.getContext("2d");
+function resizeStars(){starCanvas.width=innerWidth;starCanvas.height=innerHeight;}
+resizeStars();window.addEventListener("resize",resizeStars);
+let starArr=[...Array(150)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2,a:Math.random(),d:Math.random()*0.02}));
+(function drawStars(){
+  sctx.clearRect(0,0,innerWidth,innerHeight);
+  starArr.forEach(s=>{
+    s.a+=s.d; if(s.a>1||s.a<0)s.d*=-1;
+    sctx.fillStyle=`rgba(255,255,255,${s.a})`;
+    sctx.beginPath(); sctx.arc(s.x,s.y,s.r,0,Math.PI*2); sctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+})();
+
+/* SNOW */
+const snowCanvas=snow,ctx=snowCanvas.getContext("2d");
+function resizeSnow(){snowCanvas.width=innerWidth;snowCanvas.height=innerHeight;}
+resizeSnow();
+let flakes=[...Array(180)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+1,s:Math.random()*1.5}));
+(function snowFall(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  ctx.fillStyle="white";
+  flakes.forEach(f=>{
+    ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,Math.PI*2); ctx.fill();
+    f.y+=f.s; if(f.y>innerHeight){f.y=0;f.x=Math.random()*innerWidth}
+  });
+  requestAnimationFrame(snowFall);
+})();
+
+/* HEARTS */
+const heartCanvas=hearts,hctx=heartCanvas.getContext("2d");
+function resizeHearts(){heartCanvas.width=innerWidth;heartCanvas.height=innerHeight;}
+resizeHearts();
+let heartArr=[...Array(30)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()+0.5,a:Math.random()}));
+(function drawHearts(){
+  hctx.clearRect(0,0,innerWidth,innerHeight);
+  heartArr.forEach(h=>{
+    hctx.globalAlpha=h.a;
+    hctx.fillStyle="#ff6f9c";
+    hctx.beginPath();
+    hctx.arc(h.x,h.y,8*h.s,0,Math.PI*2);
+    hctx.fill();
+    h.y-=0.5;
+    if(h.y<0){h.y=innerHeight;h.x=Math.random()*innerWidth}
+  });
+  requestAnimationFrame(drawHearts);
+})();
+</script>
+
+</body>
+</html>
